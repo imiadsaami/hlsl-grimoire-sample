@@ -40,7 +40,9 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     auto& renderContext = g_graphicsEngine->GetRenderContext();
 
     float moveR = 0.0f;
+    float moveL = 0.0f;
     float speedR = 0.0125f;
+    float speedL = 0.025f;
 
     // ここからゲームループ
     while (DispatchWindowMessage())
@@ -59,9 +61,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
         Matrix mWorld;
         //mWorld.MakeTranslation(0.5f, 0.4f, 0.0f);
         moveR += speedR;
+        moveL += speedL;
         Matrix rotMatrix;
+        rotMatrix.MakeRotationY(moveL);
         rotMatrix.MakeRotationZ(moveR);
-        mWorld.MakeTranslation(cos(moveR), 0.4f, 0.0f);
+        mWorld.MakeTranslation(cos(moveR), sin(moveL), 0.0f);
         mWorld = rotMatrix * mWorld;
         //mWorld = mWorld * rotMatrix;
 
